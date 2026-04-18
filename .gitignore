@@ -42,3 +42,4 @@ packages/api/data/plugins/
 packages/api/data/forkcart.db
 data/plugins/
 .installed
+.env.production

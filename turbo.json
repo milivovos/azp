@@ -2,11 +2,14 @@
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local", ".env"],
   "globalEnv": [
-    "NODE_ENV"
+    "NODE_ENV",
+    "DATABASE_URL",
+    "SESSION_SECRET"
   ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "inputs": ["packages/storefront/**", "packages/shared/**", "packages/database/**"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "dev": {

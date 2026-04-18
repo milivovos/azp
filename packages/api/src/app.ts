@@ -220,7 +220,7 @@ export async function createApp(db: Database) {
   app.use(
     '*',
     cors({
-      origin: ['http://localhost:3001', 'http://localhost:4200', 'http://localhost:3000'],
+      origin: ['http://localhost:3001', 'http://localhost:4200', 'http://localhost:4201', 'http://localhost:3000', 'http://localhost:4000'],
       credentials: true,
     }),
   );

@@ -1,5 +1,5 @@
 [build]
-  command = "pnpm turbo run build --filter=@forkcart/storefront"
+  command = "pnpm --filter @forkcart/storefront build"
   publish = "packages/storefront/.next"
 
 [build.environment]

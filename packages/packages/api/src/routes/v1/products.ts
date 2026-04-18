@@ -1,0 +1,170 @@
+import { Hono } from 'hono';
+import type { ProductService, MediaService, ProductTranslationService } from '@forkcart/core';
+import {
+  CreateProductSchema,
+  UpdateProductSchema,
+  ProductFilterSchema,
+  PaginationSchema,
+  IdParamSchema,
+} from '@forkcart/shared';
+import { requireRole } from '../../middleware/permissions';
+
+/** Product CRUD routes */
+export function createProductRoutes(
+  productService: ProductService,
+  mediaService?: MediaService,
+  productTranslationService?: ProductTranslationService,
+  translationService?: { getDefaultLocale(): Promise<string> },
+) {
+  const router = new Hono();
+
+  /** Resolve locale from ?locale= query param or Accept-Language header */
+  function resolveLocale(c: {
+    req: { query: (k: string) => string | undefined; header: (k: string) => string | undefined };
+  }): string | null {
+    const fromQuery = c.req.query('locale');
+    if (fromQuery) return fromQuery;
+    const acceptLang = c.req.header('Accept-Language');
+    if (acceptLang) return acceptLang.split(',')[0]?.split('-')[0]?.trim() || null;
+    return null;
+  }
+
+  /** Merge translation fields over product (non-null fields override, empty string is valid) */
+  function mergeTranslation<T extends Record<string, unknown>>(
+    product: T,
+    translation: {
+      name: string | null;
+      description: string | null;
+      shortDescription: string | null;
+      metaTitle: string | null;
+      metaDescription: string | null;
+    } | null,
+  ): T {
+    if (!translation) return product;
+    const merged = { ...product };
+    const fields = [
+      'name',
+      'description',
+      'shortDescription',
+      'metaTitle',
+      'metaDescription',
+    ] as const;
+    for (const field of fields) {
+      if (translation[field] !== null && translation[field] !== undefined) {
+        merged[field as keyof T] = translation[field] as T[keyof T];
+      }
+    }
+    return merged;
+  }
+
+  /** List products with filtering and pagination */
+  router.get('/', async (c) => {
+    const query = c.req.query();
+    const filter = ProductFilterSchema.parse(query);
+    const pagination = PaginationSchema.parse(query);
+
+    const result = await productService.list(filter, pagination);
+    const locale = resolveLocale(c);
+
+    // Attach images and merge translations
+    if (result.data?.length) {
+      const enriched = await Promise.all(
+        result.data.map(async (p: { id: string }) => {
+          let product = { ...p };
+
+          // Images
+          if (mediaService) {
+            const media = await mediaService.getByEntity('product', p.id);
+            (product as Record<string, unknown>)['images'] = media.map((m) => ({
+              id: m.id,
+              url: m.url,
+              alt: m.alt,
+              sortOrder: m.sortOrder,
+            }));
+          }
+
+          // Translation overlay
+          if (locale && productTranslationService) {
+            const translation = await productTranslationService.getTranslation(p.id, locale);
+            product = mergeTranslation(product, translation);
+          }
+
+          return product;
+        }),
+      );
+      return c.json({ ...result, data: enriched });
+    }
+
+    return c.json(result);
+  });
+
+  /** Get product by ID */
+  router.get('/:id', async (c) => {
+    const id = c.req.param('id');
+
+    // Try UUID first, then slug
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+
+    const product = isUuid ? await productService.getById(id) : await productService.getBySlug(id);
+
+    // Attach images if media service available
+    let images: Array<{ id: string; url: string; alt: string | null; sortOrder: number }> = [];
+    if (mediaService) {
+      const media = await mediaService.getByEntity('product', product.id);
+      images = media.map((m) => ({ id: m.id, url: m.url, alt: m.alt, sortOrder: m.sortOrder }));
+    }
+
+    let productData = { ...product, images };
+
+    // Merge translation if locale requested
+    const locale = resolveLocale(c);
+    if (locale && productTranslationService) {
+      const translation = await productTranslationService.getTranslation(product.id, locale);
+      productData = mergeTranslation(productData, translation);
+    }
+
+    return c.json({ data: productData });
+  });
+
+  /** Create product */
+  router.post('/', async (c) => {
+    const body = await c.req.json();
+    const input = CreateProductSchema.parse(body);
+
+    const product = await productService.create(input);
+
+    // Auto-create translation for the default locale
+    if (productTranslationService && translationService) {
+      const defaultLocale = await translationService.getDefaultLocale();
+      await productTranslationService.upsert(product.id, defaultLocale, {
+        name: input.name,
+        description: input.description ?? null,
+        shortDescription: input.shortDescription ?? null,
+        metaTitle: ((input as Record<string, unknown>).metaTitle as string | null) ?? null,
+        metaDescription:
+          ((input as Record<string, unknown>).metaDescription as string | null) ?? null,
+      });
+    }
+
+    return c.json({ data: product }, 201);
+  });
+
+  /** Update product */
+  router.put('/:id', async (c) => {
+    const { id } = IdParamSchema.parse({ id: c.req.param('id') });
+    const body = await c.req.json();
+    const input = UpdateProductSchema.parse(body);
+
+    const product = await productService.update(id, input);
+    return c.json({ data: product });
+  });
+
+  /** Delete product (admin + superadmin only) */
+  router.delete('/:id', requireRole('admin', 'superadmin'), async (c) => {
+    const { id } = IdParamSchema.parse({ id: c.req.param('id') });
+    await productService.delete(id);
+    return c.json({ success: true }, 200);
+  });
+
+  return router;
+}

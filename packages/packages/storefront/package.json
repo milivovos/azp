@@ -1,0 +1,33 @@
+{
+  "name": "@forkcart/storefront",
+  "version": "0.1.2",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port ${STOREFRONT_PORT:-4200}",
+    "build": "next build",
+    "start": "next start --port ${STOREFRONT_PORT:-4200}",
+    "clean": "rm -rf .next",
+    "typecheck": "tsc --noEmit",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@forkcart/i18n": "workspace:*",
+    "@forkcart/shared": "workspace:*",
+    "clsx": "^2.1.0",
+    "lucide-react": "^0.460.0",
+    "next": "^16.2.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sanitize-html": "^2.17.1",
+    "tailwind-merge": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/sanitize-html": "^2.16.1",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.7.0"
+  }
+}

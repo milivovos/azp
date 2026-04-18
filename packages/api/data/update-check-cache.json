@@ -1,0 +1,12 @@
+{
+  "result": {
+    "currentVersion": "0.1.2",
+    "latestVersion": "0.1.2",
+    "updateAvailable": false,
+    "releaseNotes": "5 rounds of QA by Tyto's Owlets 🐣 — all 12 tests passing.\n\n**Fixes:**\n- 🔧 Admin panel starts correctly after install\n- 🔧 Silent crash when `shop` config omitted from API\n- 🔧 Plugin Store works out-of-the-box (default registry)\n- 🔧 Build errors logged instead of silently swallowed\n- 🔧 `PLUGIN_REGISTRY_URL` auto-written to `.env`\n\n**Install:**\n```bash\nnpx create-forkcart@latest my-shop\n```",
+    "downloadUrl": "https://github.com/forkcart/forkcart/archive/refs/tags/v0.1.2.tar.gz",
+    "publishedAt": "2026-04-03T00:19:11Z",
+    "sha256": null
+  },
+  "checkedAt": 1776456707176
+}

@@ -1,0 +1,112 @@
+'use client';
+
+import { useTranslation } from '@forkcart/i18n/react';
+import { LocaleLink } from '@/components/locale-link';
+import { CookieSettingsLink } from '@/components/consent/cookie-settings-link';
+import { SITE_BRAND } from '@/lib/site-brand';
+
+export function Footer() {
+  const { t } = useTranslation();
+
+  return (
+    <footer className="mt-auto border-t bg-gray-50">
+      <div className="container-page py-12">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900">
+              {t('footer.shop')}
+            </h3>
+            <ul className="mt-4 space-y-2">
+              <li>
+                <LocaleLink href="/products" className="text-sm text-gray-500 hover:text-gray-900">
+                  {t('footer.allProducts')}
+                </LocaleLink>
+              </li>
+              <li>
+                <LocaleLink href="/search" className="text-sm text-gray-500 hover:text-gray-900">
+                  {t('common.search')}
+                </LocaleLink>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900">
+              {t('footer.company')}
+            </h3>
+            <ul className="mt-4 space-y-2">
+              <li>
+                <LocaleLink
+                  href="/p/about-us"
+                  className="text-sm text-gray-500 hover:text-gray-900"
+                >
+                  {t('footer.about')}
+                </LocaleLink>
+              </li>
+              <li>
+                <LocaleLink href="/p/contact" className="text-sm text-gray-500 hover:text-gray-900">
+                  {t('footer.contact')}
+                </LocaleLink>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900">
+              {t('footer.legal')}
+            </h3>
+            <ul className="mt-4 space-y-2">
+              <li>
+                <LocaleLink
+                  href="/p/privacy-policy"
+                  className="text-sm text-gray-500 hover:text-gray-900"
+                >
+                  {t('footer.privacy')}
+                </LocaleLink>
+              </li>
+              <li>
+                <LocaleLink
+                  href="/p/terms-of-service"
+                  className="text-sm text-gray-500 hover:text-gray-900"
+                >
+                  {t('footer.terms')}
+                </LocaleLink>
+              </li>
+              <li>
+                <LocaleLink href="/p/imprint" className="text-sm text-gray-500 hover:text-gray-900">
+                  {t('footer.imprint')}
+                </LocaleLink>
+              </li>
+              <li>
+                <CookieSettingsLink />
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900">
+              {t('footer.newsletter')}
+            </h3>
+            <p className="mt-4 text-sm text-gray-500">{t('footer.newsletterSubtext')}</p>
+            <form className="mt-3 flex gap-2">
+              <input
+                type="email"
+                placeholder={t('footer.emailPlaceholder')}
+                className="h-11 min-h-[44px] flex-1 rounded-md border border-gray-200 px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/50"
+              />
+              <button
+                type="submit"
+                className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-hover"
+              >
+                {t('footer.subscribe')}
+              </button>
+            </form>
+          </div>
+        </div>
+        <div className="mt-12 border-t pt-6 text-center text-xs text-gray-400">
+          {t('footer.copyright', {
+            year: new Date().getFullYear(),
+            shopName: SITE_BRAND.legalName,
+          })}
+        </div>
+      </div>
+    </footer>
+  );
+}

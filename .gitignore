@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+.next/
+.turbo/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test
+coverage/
+
+# Uploads
+uploads/
+
+# Logs
+*.log
+
+# Uploads
+packages/api/uploads/
+packages/admin/public/downloads/*.apk
+packages/plugins/
+
+# Runtime data (plugins & database)
+packages/api/data/plugins/
+packages/api/data/forkcart.db
+data/plugins/
+.installed

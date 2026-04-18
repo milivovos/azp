@@ -1,0 +1,57 @@
+{
+  "active": false,
+  "version": "0.1.2",
+  "steps": [
+    {
+      "name": "downloading",
+      "status": "done",
+      "message": "Downloaded (SHA256: fa2a401cdc06…)",
+      "timestamp": "2026-04-17T20:11:33.365Z"
+    },
+    {
+      "name": "extracting",
+      "status": "done",
+      "message": "Extracted",
+      "timestamp": "2026-04-17T20:11:33.519Z"
+    },
+    {
+      "name": "backing_up",
+      "status": "done",
+      "message": "Backup complete",
+      "timestamp": "2026-04-17T20:11:33.519Z"
+    },
+    {
+      "name": "copying",
+      "status": "done",
+      "message": "Files updated",
+      "timestamp": "2026-04-17T20:11:33.651Z"
+    },
+    {
+      "name": "installing",
+      "status": "done",
+      "message": "Dependencies installed",
+      "timestamp": "2026-04-17T20:11:42.774Z"
+    },
+    {
+      "name": "building",
+      "status": "failed",
+      "message": "pnpm build failed: Command failed: pnpm build\n WARNING  No locally installed `turbo` found in your repository. Using globally installed version (2.8.16), which can cause unexpected behavior.\n\nInstalling the version in your repository (^2.3.0) before calling `turbo` will result in more predictable behavior across environments.\n• turbo 2.8.16\ncreate-forkcart:build: ERROR: command finished with error: command (/Users/sergeyfedtsov/dev/forkcart/packages/packages/create-forkcart) /Users/sergeyfedtsov/Library/pnpm/.tools/pnpm/9.15.4/bin/pnpm run build exited (2)\ncreate-forkcart#build: command (/Users/sergeyfedtsov/dev/forkcart/packages/packages/create-forkcart) /Users/sergeyfedtsov/Library/pnpm/.tools/pnpm/9.15.4/bin/pnpm run build exited (2)\n ERROR  run failed: command  exited (2)\n",
+      "timestamp": "2026-04-17T20:11:46.469Z"
+    },
+    {
+      "name": "migrating",
+      "status": "pending",
+      "message": "",
+      "timestamp": null
+    },
+    {
+      "name": "complete",
+      "status": "pending",
+      "message": "",
+      "timestamp": null
+    }
+  ],
+  "error": "pnpm build failed: Command failed: pnpm build\n WARNING  No locally installed `turbo` found in your repository. Using globally installed version (2.8.16), which can cause unexpected behavior.\n\nInstalling the version in your repository (^2.3.0) before calling `turbo` will result in more predictable behavior across environments.\n• turbo 2.8.16\ncreate-forkcart:build: ERROR: command finished with error: command (/Users/sergeyfedtsov/dev/forkcart/packages/packages/create-forkcart) /Users/sergeyfedtsov/Library/pnpm/.tools/pnpm/9.15.4/bin/pnpm run build exited (2)\ncreate-forkcart#build: command (/Users/sergeyfedtsov/dev/forkcart/packages/packages/create-forkcart) /Users/sergeyfedtsov/Library/pnpm/.tools/pnpm/9.15.4/bin/pnpm run build exited (2)\n ERROR  run failed: command  exited (2)\n",
+  "startedAt": "2026-04-17T20:11:31.956Z",
+  "completedAt": "2026-04-17T20:11:46.937Z"
+}

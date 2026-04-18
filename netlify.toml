@@ -1,0 +1,9 @@
+[build]
+  command = "pnpm turbo run build --filter=@forkcart/storefront"
+  publish = "packages/storefront/.next"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

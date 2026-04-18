@@ -1,0 +1,34 @@
+headers = []
+redirects = []
+
+[functions]
+
+[functions."*"]
+
+[[plugins]]
+origin = "config"
+package = "@netlify/plugin-nextjs"
+
+[plugins.inputs]
+
+[build]
+publish = "/Users/sergeyfedtsov/Desktop/images-1756553606578 2/untitled folder 3/fffm/gtm/gminy/forkcart/packages/storefront/packages/storefront/.next"
+publishOrigin = "config"
+commandOrigin = "config"
+base = "/Users/sergeyfedtsov/Desktop/images-1756553606578 2/untitled folder 3/fffm/gtm/gminy/forkcart/packages/storefront"
+command = "cd ../.. && pnpm turbo run build --filter=@forkcart/storefront"
+
+[build.environment]
+NODE_VERSION = "20"
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]

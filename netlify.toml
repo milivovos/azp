@@ -4,6 +4,8 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  NEXT_PUBLIC_STOREFRONT_API_URL = "https://azparts-api.netlify.com"
+  NEXT_PUBLIC_API_URL = "https://azparts-api.netlify.com"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

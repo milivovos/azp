@@ -277,8 +277,7 @@ export function AzPartsHome({ products, categories }: AzPartsHomeProps) {
         <div className="container-page py-16 text-center">
           <h2 className="text-2xl font-bold text-gray-900">Готовы к запуску с вашим бэкендом</h2>
           <p className="mx-auto mt-3 max-w-lg text-gray-600">
-            Эта витрина уже использует те же контракты, что и ForkCart: товары, категории и поиск из
-            вашего API.
+            Наш каталог запчастей: товары, категории и поиск — всё связано с единым API.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <LocaleLink href="/products">
